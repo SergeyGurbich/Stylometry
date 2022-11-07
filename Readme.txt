@@ -1,1 +1,1 @@
-This project is aimed to identify an author of a text by their style features. It is language-dependent, since the features of authors' style vary for different languages. Currently, here is only the version for Russian language, created with Pymorphy2 library.
+This project is aimed to identify an author of a text by their style features. It is language-dependent, since the features of authors' style vary for different languages. Currently, there is only the version for Russian language, created with Pymorphy2 library.
