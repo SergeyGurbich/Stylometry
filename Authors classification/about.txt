@@ -1,0 +1,1 @@
+This folder consist realization of different approaches to the classification of authors' style. All of them work with dataset created on the previous step with the script from the folder Style Features to Dataset. Among other approachs, MLP reachs the best results. Surprisingly, the outputs of the MLP version with normalized data are slightly worse then in case of rough data.

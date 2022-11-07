@@ -168,10 +168,7 @@ def Styl_for_author(text, name, filename):
         c=float("{:0.2f}".format(a/b))
         return c
 
-#    def stylometr(text, name, filename):
-        '''вычисляем долю прил., прич., дееприч., 'который' функцией lemmat_ru,
-        добавляем это число в соответствующий список shares,
-        '''
+    '''вычисляем каждый параметр своей функцией, формируем общий список'''
     share_brack=count_brack(text)
     share_adj, share_grn, share_kotor, share_pri4, share_uniq=lemmat_ru(text)
     share_verb2=verb_2(text)
@@ -211,8 +208,22 @@ def new_author(file_path, name_a):
             df.loc[len(df)]=lst
         else:
             continue
-
     return df
+
+def dialog():
+    '''Повторяющийся несколько раз запрос имени автора и пути к его папке'''
+    
+    name = simpledialog.askstring("Input", "Введите имя автора",
+                                parent=root)
+    while name=='':
+        messagebox.showinfo('Info', 'Таки введите автора')
+        name = simpledialog.askstring("Input", "Введите имя автора")
+
+    messagebox.showinfo('info',
+                        'Соберите файлы этого автора в отдельную папку и нажмите ок')
+    file_path = filedialog.askdirectory()
+    return file_path, name
+
 
 # Создаем пустой датафрейм с названиями столбцов
 df = pd.DataFrame(columns=['Назв.файла', 'Имя автора', 'Ср. длина предл',
@@ -228,49 +239,20 @@ df = pd.DataFrame(columns=['Назв.файла', 'Имя автора', 'Ср. 
 # Начинаем процедуру создания датасета
 messagebox.showinfo('info',
                         'Начинаем процедуру создания датасета')
-name = simpledialog.askstring("Input", "Введите имя автора",
-                                parent=root)
-while name=='':
-    messagebox.showinfo('Info', 'Таки введите автора')
-    name = simpledialog.askstring("Input", "Введите имя автора")
-
-messagebox.showinfo('info',
-                        'Соберите файлы этого автора в отдельную папку и нажмите ок')
-file_path = filedialog.askdirectory()
-
+file_path, name = dialog()
 df=new_author(file_path, name)
 
 # Добавим тексты второго автора
 messagebox.showinfo('info',
                         'Добавим второго автора')
-
-name = simpledialog.askstring("Input", "Введите имя автора",
-                                parent=root)
-while name=='':
-    messagebox.showinfo('Info', 'Таки введите автора')
-    name = simpledialog.askstring("Input", "Введите имя автора")
-
-messagebox.showinfo('info',
-                        'Соберите файлы этого автора в отдельную папку и нажмите ок')
-file_path = filedialog.askdirectory()
-
+file_path, name = dialog()
 df=new_author(file_path, name)
 
 # popup Хотите добавить еще автора? да\нет
 a = messagebox.askquestion('Вопрос', 'Хотите добавить третьего автора?')
 if a == 'yes':
-    name = simpledialog.askstring("Input", "Введите имя автора",
-                                parent=root)
-    while name=='':
-        messagebox.showinfo('Info', 'Таки введите автора')
-        name = simpledialog.askstring("Input", "Введите имя автора")
-
-    messagebox.showinfo('info',
-                        'Соберите файлы этого автора в отдельную папку и нажмите ок')
-    file_path = filedialog.askdirectory()
-
+    file_path, name = dialog()
     df_res=new_author(file_path, name)
-
     messagebox.showinfo('Response',
                         'Отлично, датасет лежит в файле Dataset_authors_3_exp.xlsx')
 else:
@@ -278,4 +260,4 @@ else:
     messagebox.showinfo('Response',
                         'Отлично, датасет лежит в файле Dataset_authors_3_exp.xlsx')
 
-df_res.to_excel('Dataset_authors_3_exp1.xlsx', index=False)   
+df_res.to_excel('Dataset_authors_3_exp2.xlsx', index=False)   
